@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Booking enquiry | MobileHub</title><link rel="stylesheet" th:href="@{/css/styles.css}"></head>
+<body class="form-page">
+<header class="simple-header"><a class="brandmark" th:href="@{/}"><span class="mark">M</span> MobileHub</a><a class="back-link" th:href="@{/}">← Back to phones</a></header>
+<main class="form-wrap">
+  <p class="eyebrow purple">ONE SIMPLE STEP</p><h1>Let's get you<br><span>connected.</span></h1><p class="muted">Share your details to prepare an enquiry. Fields marked required must be completed.</p>
+  <div class="selected-phone"><div class="selected-icon">✦</div><div><small>YOUR SELECTED PHONE</small><h2 th:text="${phone.brand() + ' ' + phone.name()}">Apple iPhone 16</h2><p th:text="${'₹' + #numbers.formatInteger(phone.priceInRupees(), 1, 'COMMA') + ' · ' + phone.storage()}">₹69,900 · 128 GB</p></div></div>
+  <form class="booking-form" method="post" th:action="@{/booking(phoneId=${phone.id()})}" th:object="${bookingRequest}">
+    <div class="field"><label for="fullName">Full name *</label><input id="fullName" th:field="*{fullName}" autocomplete="name" maxlength="80" required placeholder="e.g. Priya Kumar"><small class="error" th:errors="*{fullName}"></small></div>
+    <div class="field"><label for="phoneNumber">Contact number *</label><input id="phoneNumber" th:field="*{phoneNumber}" autocomplete="tel" inputmode="tel" maxlength="20" required placeholder="+91 98765 43210"><small class="error" th:errors="*{phoneNumber}"></small></div>
+    <div class="field"><label for="city">City *</label><input id="city" th:field="*{city}" autocomplete="address-level2" maxlength="80" required placeholder="Your city"><small class="error" th:errors="*{city}"></small></div>
+    <fieldset class="field"><legend>How should we contact you? *</legend><div class="radio-row"><label><input type="radio" th:field="*{contactMethod}" value="Phone call" checked> Phone call</label><label><input type="radio" th:field="*{contactMethod}" value="SMS"> SMS</label><label><input type="radio" th:field="*{contactMethod}" value="Email"> Email</label></div><small class="error" th:errors="*{contactMethod}"></small></fieldset>
+    <div class="field"><label for="notes">Notes <span class="muted">(optional)</span></label><textarea id="notes" th:field="*{notes}" rows="3" maxlength="500" placeholder="Color preference or any questions"></textarea><small class="error" th:errors="*{notes}"></small></div>
+    <div class="consent"><label><input type="checkbox" th:field="*{consent}" required> I agree to be contacted about this enquiry.</label><small class="error" th:errors="*{consent}"></small></div>
+    <button class="button button-primary submit-button" type="submit">Prepare my enquiry <span aria-hidden="true">↗</span></button>
+    <p class="form-note">This starter shows a confirmation only; it does not save or send your personal details.</p>
+  </form>
+</main><script th:src="@{/js/app.js}" defer></script></body></html>

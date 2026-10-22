@@ -1,0 +1,11 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Enquiry prepared | MobileHub</title><link rel="stylesheet" th:href="@{/css/styles.css}"></head>
+<body class="form-page"><header class="simple-header"><a class="brandmark" th:href="@{/}"><span class="mark">M</span> MobileHub</a></header>
+<main class="confirmation">
+  <div class="success-icon">✓</div><p class="eyebrow purple">ALL SET</p><h1>Thanks, <span th:text="${fullName}">there</span>.</h1>
+  <p class="muted">Your demo enquiry has been prepared for <strong th:text="${phone.brand() + ' ' + phone.name()}">your phone</strong>.</p>
+  <div class="reference"><small>DEMO REFERENCE</small><strong th:text="${reference}">MH-1234ABCD</strong></div>
+  <p class="form-note">Important: no booking has been submitted to a seller and no details have been stored. Connect a secure backend before using this service with real customers.</p>
+  <a class="button button-primary" th:href="@{/}">Back to phone collection</a>
+</main></body></html>
