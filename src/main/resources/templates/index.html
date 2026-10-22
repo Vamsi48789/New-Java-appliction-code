@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#11172b">
+  <title>MobileHub | Find your next phone</title>
+  <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<header class="hero">
+  <nav class="nav"><a class="brandmark" th:href="@{/}"><span class="mark">M</span> MobileHub</a><span class="nav-note">YOUR NEXT UPGRADE</span></nav>
+  <div class="hero-content">
+    <div><p class="eyebrow">A BETTER WAY TO CHOOSE</p><h1>Find your next<br><span>favorite phone.</span></h1>
+      <p class="hero-copy">Explore trusted brands, compare options, and send a booking enquiry in a few simple steps.</p>
+      <a class="button button-light" href="#catalog">Explore phones <span aria-hidden="true">↓</span></a>
+    </div>
+    <div class="hero-art" aria-hidden="true"><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><div class="phone-art"><div class="camera"></div><div class="screen-glow"></div><span>✦</span></div><div class="floating-chip chip-top">Your next upgrade</div><div class="floating-chip chip-bottom">Made simple ✨</div></div>
+  </div>
+</header>
+<main id="catalog" class="container">
+  <div class="section-heading"><div><p class="eyebrow purple">THE COLLECTION</p><h2>Find your match.</h2><p class="muted">A few great options to get you started.</p></div><span class="count" th:text="${phones.size()} + ' models'">9 models</span></div>
+  <form class="filters" method="get" th:action="@{/}">
+    <label class="searchbox"><span aria-hidden="true">⌕</span><input type="search" name="q" th:value="${q}" placeholder="Search phone or brand" aria-label="Search phone or brand"></label>
+    <label class="filter-label"><span class="sr-only">Brand</span><select name="brand"><option>All brands</option><option th:each="b : ${ {'Apple','Samsung','Google','OnePlus','Nothing','Xiaomi','vivo'} }" th:value="${b}" th:text="${b}" th:selected="${brand == b}"></option></select></label>
+    <label class="filter-label"><span class="sr-only">Maximum budget</span><select name="maxPrice"><option value="">Any budget</option><option value="25000" th:selected="${maxPrice == '25000'}">Under ₹25,000</option><option value="45000" th:selected="${maxPrice == '45000'}">Under ₹45,000</option><option value="70000" th:selected="${maxPrice == '70000'}">Under ₹70,000</option><option value="100000" th:selected="${maxPrice == '100000'}">Under ₹1,00,000</option></select></label>
+    <button class="button button-primary" type="submit">Apply filters</button>
+  </form>
+  <div class="phone-grid" th:if="${!phones.isEmpty()}">
+    <article class="phone-card" th:each="phone,iter : ${phones}">
+      <div class="card-top"><span class="brand-label" th:text="${phone.brand()}">APPLE</span><span class="badge" th:text="${phone.badge()}">Popular</span></div>
+      <div class="product-row"><div class="mini-phone" th:classappend="${' phone-tone-' + (iter.index % 5)}" aria-hidden="true"><span>✦</span></div>
+        <div class="product-info"><h3 th:text="${phone.name()}">iPhone 16</h3><p th:text="${phone.description()}">A great phone for everyday use.</p><span class="specs" th:text="${phone.storage() + ' · ' + phone.color()}">128 GB · Blue</span></div>
+      </div>
+      <div class="card-bottom"><div><span class="price" th:text="${'₹' + #numbers.formatInteger(phone.priceInRupees(), 1, 'COMMA')}">₹69,900</span><small>Indicative price</small></div><a class="button button-primary book-link" th:href="@{/booking(phoneId=${phone.id()})}">Enquire <span aria-hidden="true">↗</span></a></div>
+    </article>
+  </div>
+  <div class="empty-state" th:if="${phones.isEmpty()}"><div class="empty-icon">⌕</div><h3>No phones found</h3><p>Try another search or adjust your filters.</p><a class="button button-primary" th:href="@{/}">Reset filters</a></div>
+  <section class="trust-strip"><div><span class="trust-icon">✓</span><p><strong>Easy to explore</strong><br><small>Compare in one place</small></p></div><div><span class="trust-icon">♡</span><p><strong>Your choice, your way</strong><br><small>Send an enquiry when ready</small></p></div><div><span class="trust-icon">✦</span><p><strong>Simple experience</strong><br><small>Designed for every screen</small></p></div></section>
+  <p class="disclaimer">Prices and product descriptions are illustrative sample data, not live offers. Confirm current pricing and availability with the seller.</p>
+</main>
+<footer><a class="brandmark" th:href="@{/}"><span class="mark">M</span> MobileHub</a><span>Find a phone that feels like you.</span></footer>
+<script th:src="@{/js/app.js}" defer></script>
+</body></html>
